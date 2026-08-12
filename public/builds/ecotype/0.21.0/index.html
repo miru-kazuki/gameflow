@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoType v0.21.0</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #292524;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      color: #fff;
+    }
+    canvas { border-radius: 8px; }
+    .hud { margin-top: 12px; text-align: center; }
+    .hud h2 { color: #fb923c; font-size: 14px; }
+    .badge {
+      display: inline-block;
+      background: #7c2d12;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="640" height="360"></canvas>
+  <div class="hud">
+    <h2>EcoType v0.21.0 — Prototype</h2>
+    <span class="badge">Unity WebGL Build</span>
+  </div>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+    function draw() {
+      t += 0.02;
+      ctx.fillStyle = '#1c1917';
+      ctx.fillRect(0, 0, 640, 360);
+      ctx.fillStyle = '#fb923c';
+      ctx.font = 'bold 32px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('EcoType Prototype', 320, 160);
+      ctx.font = '16px system-ui';
+      ctx.fillStyle = '#a8a29e';
+      ctx.fillText('Early build — basic typing mechanic', 320, 200);
+      ctx.beginPath();
+      ctx.arc(320 + Math.sin(t)*80, 260, 20, 0, Math.PI*2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+    }
+    setInterval(draw, 1000/30);
+  </script>
+</body>
+</html>

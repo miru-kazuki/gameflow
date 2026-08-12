@@ -1,0 +1,40 @@
+import { Project } from "@/types/project";
+
+export const projects: Project[] = [
+  {
+    id: "proj-ecotype",
+    name: "EcoType",
+    slug: "ecotype",
+    description: "Typing game about waste management and recycling education.",
+    engine: "Unity",
+    githubRepo: "nabil/ecotype",
+    githubBranch: "main",
+    buildFolder: "Builds/WebGL",
+    activeBuildId: "build-ecotype-023",
+    createdAt: "2026-01-15",
+  },
+  {
+    id: "proj-deck-recycle",
+    name: "Deck Recycle",
+    slug: "deck-recycle",
+    description: "Card-based puzzle game teaching sustainable habits.",
+    engine: "Unity",
+    githubRepo: "nabil/deck-recycle",
+    githubBranch: "main",
+    buildFolder: "export/web",
+    activeBuildId: "build-deck-012",
+    createdAt: "2026-02-20",
+  },
+  {
+    id: "proj-pixel-farm",
+    name: "Pixel Farm",
+    slug: "pixel-farm",
+    description: "Godot farming sim with eco-friendly mechanics.",
+    engine: "Godot",
+    githubRepo: "nabil/pixel-farm",
+    githubBranch: "develop",
+    buildFolder: "builds/html5",
+    activeBuildId: "build-farm-005",
+    createdAt: "2026-03-10",
+  },
+];

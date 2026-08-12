@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoType v0.22.0</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      color: #fff;
+    }
+    canvas { border-radius: 8px; }
+    .hud { margin-top: 12px; text-align: center; }
+    .hud h2 { color: #38bdf8; font-size: 14px; }
+    .hud p { color: #94a3b8; font-size: 12px; margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      background: #0c4a6e;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="640" height="360"></canvas>
+  <div class="hud">
+    <h2>EcoType v0.22.0 — Score Screen Fix</h2>
+    <p>Type words to earn points. Press any key!</p>
+    <span class="badge">Unity WebGL Build</span>
+  </div>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    let score = 0;
+    let word = 'RECYCLE';
+    let typed = '';
+
+    document.addEventListener('keydown', e => {
+      if (e.key.length === 1) {
+        typed += e.key.toUpperCase();
+        if (word.startsWith(typed)) {
+          if (typed === word) { score += 100; typed = ''; word = ['REUSE','REDUCE','ECO','GREEN'][Math.floor(Math.random()*4)]; }
+        } else typed = '';
+      }
+    });
+
+    function draw() {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, 640, 360);
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 48px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText(word, 320, 160);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '20px system-ui';
+      ctx.fillText('Typed: ' + typed, 320, 220);
+      ctx.fillStyle = '#4ade80';
+      ctx.font = 'bold 24px system-ui';
+      ctx.fillText('Score: ' + score, 320, 300);
+    }
+    setInterval(draw, 1000/30);
+  </script>
+</body>
+</html>

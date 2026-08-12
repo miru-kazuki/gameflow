@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deck Recycle v0.11.0</title>
+  <style>
+    body { margin:0; background:#1a1a2e; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; font-family:system-ui; color:#fff; }
+    canvas { border-radius:8px; }
+    .hud { margin-top:12px; text-align:center; font-size:14px; color:#a78bfa; }
+  </style>
+</head>
+<body>
+  <canvas id="c" width="640" height="360"></canvas>
+  <div class="hud">Deck Recycle v0.11.0 — Tutorial Level</div>
+  <script>
+    const ctx = document.getElementById('c').getContext('2d');
+    setInterval(()=>{
+      ctx.fillStyle='#0f0f23'; ctx.fillRect(0,0,640,360);
+      ctx.fillStyle='#a78bfa'; ctx.font='bold 28px system-ui'; ctx.textAlign='center';
+      ctx.fillText('Tutorial: Drag cards to bins',320,180);
+      ctx.font='14px system-ui'; ctx.fillStyle='#94a3b8';
+      ctx.fillText('(Previous version — simpler UI)',320,220);
+    },1000/30);
+  </script>
+</body>
+</html>

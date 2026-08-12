@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Farm v0.5.0</title>
+  <style>
+    body { margin:0; background:#14532d; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; font-family:system-ui; color:#fff; }
+    canvas { border-radius:8px; image-rendering:pixelated; }
+    .hud { margin-top:12px; text-align:center; font-size:14px; color:#86efac; }
+  </style>
+</head>
+<body>
+  <canvas id="c" width="640" height="360"></canvas>
+  <div class="hud">Pixel Farm v0.5.0 — Click to plant crops!</div>
+  <script>
+    const ctx = document.getElementById('c').getContext('2d');
+    const crops=[];
+    document.getElementById('c').onclick=e=>{
+      const r=e.target.getBoundingClientRect();
+      crops.push({x:(e.clientX-r.left)*(640/r.width), y:(e.clientY-r.top)*(360/r.height), age:0});
+    };
+    setInterval(()=>{
+      ctx.fillStyle='#052e16'; ctx.fillRect(0,0,640,360);
+      ctx.fillStyle='#166534'; for(let i=0;i<640;i+=32) for(let j=200;j<360;j+=32) ctx.fillRect(i,j,30,30);
+      crops.forEach(c=>{ c.age++; const s=Math.min(c.age/30,1)*20;
+        ctx.fillStyle='#4ade80'; ctx.fillRect(c.x-s/2,c.y-s, s,s);
+        ctx.fillStyle='#92400e'; ctx.fillRect(c.x-3,c.y,6,8);
+      });
+      ctx.fillStyle='#fff'; ctx.font='14px system-ui'; ctx.fillText('Crops: '+crops.length, 20, 30);
+    },1000/30);
+  </script>
+</body>
+</html>

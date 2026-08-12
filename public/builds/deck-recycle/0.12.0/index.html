@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deck Recycle v0.12.0</title>
+  <style>
+    body { margin:0; background:#1a1a2e; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; font-family:system-ui; color:#fff; }
+    canvas { border-radius:8px; }
+    .hud { margin-top:12px; text-align:center; font-size:14px; color:#e879f9; }
+  </style>
+</head>
+<body>
+  <canvas id="c" width="640" height="360"></canvas>
+  <div class="hud">Deck Recycle v0.12.0 — Click cards to recycle!</div>
+  <script>
+    const ctx = document.getElementById('c').getContext('2d');
+    const cards = [{x:160,y:180,c:'#e879f9'},{x:320,y:180,c:'#818cf8'},{x:480,y:180,c:'#34d399'}];
+    let score=0;
+    document.getElementById('c').onclick=e=>{
+      const r=e.target.getBoundingClientRect();
+      const mx=(e.clientX-r.left)*(640/r.width), my=(e.clientY-r.top)*(360/r.height);
+      cards.forEach(c=>{ if(Math.hypot(mx-c.x,my-c.y)<50) score+=15; });
+    };
+    setInterval(()=>{
+      ctx.fillStyle='#0f0f23'; ctx.fillRect(0,0,640,360);
+      ctx.fillStyle='#fff'; ctx.font='20px system-ui'; ctx.fillText('Score: '+score,20,30);
+      cards.forEach(c=>{ ctx.fillStyle=c.c; ctx.beginPath(); ctx.roundRect(c.x-40,c.y-60,80,120,8); ctx.fill(); });
+    },1000/30);
+  </script>
+</body>
+</html>
