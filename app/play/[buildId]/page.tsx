@@ -17,12 +17,12 @@ export default async function PlayPage({
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-950">
-      <header className="flex items-center justify-between border-b border-zinc-800 px-4 py-3">
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-800 px-4 py-3">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
-            className="text-zinc-400 hover:text-white"
+            className="text-zinc-400 hover:text-white shrink-0"
             asChild
           >
             <Link href={`/builds/${build.id}`}>
@@ -30,17 +30,17 @@ export default async function PlayPage({
             </Link>
           </Button>
           <div>
-            <h1 className="font-semibold text-white">
+            <h1 className="font-semibold text-white text-sm sm:text-base">
               {build.project} — v{build.version}
             </h1>
-            <p className="text-xs text-zinc-400">{build.commitMessage}</p>
+            <p className="text-xs text-zinc-400 truncate max-w-[200px] sm:max-w-md">{build.commitMessage}</p>
           </div>
         </div>
 
         <Button
           variant="outline"
           size="sm"
-          className="border-zinc-700 text-zinc-300"
+          className="border-zinc-700 text-zinc-300 w-full sm:w-auto justify-center"
           asChild
         >
           <Link href={`/builds/${build.id}`}>
@@ -50,7 +50,7 @@ export default async function PlayPage({
         </Button>
       </header>
 
-      <main className="flex flex-1 items-center justify-center p-4">
+      <main className="flex flex-1 items-center justify-center p-2 sm:p-6">
         <div className="w-full max-w-6xl">
           <GamePlayer
             buildPath={build.buildPath}
@@ -61,3 +61,4 @@ export default async function PlayPage({
     </div>
   );
 }
+

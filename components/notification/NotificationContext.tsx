@@ -86,7 +86,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as { error?: string; message?: string };
       if (!res.ok) {
         throw new Error(data.error || "Gagal memicu update Supabase");
       }
@@ -95,10 +95,11 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         success: true,
         message: data.message || "Simulasi upload file build ke Supabase berhasil!",
       };
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
       return {
         success: false,
-        message: err.message || "Gagal memicu update Supabase",
+        message: message || "Gagal memicu update Supabase",
       };
     }
   }, []);
@@ -136,20 +137,30 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
           table: "objects",
         },
         (payload) => {
-          const record = payload.new as any;
-          const fileName = record?.name || "build.zip";
+          const record = (payload.new ?? {}) as { name?: string };
+          const fileName = record.name || "build.zip";
           addNotification({
             title: "⚡ File Supabase Ter-update!",
             message: `File "${fileName}" di bucket storage Supabase telah diperbarui. Ada build baru tersedia!`,
             type: "build",
           });
         }
-      )
-      .subscribe((status) => {
-        if (status === "SUBSCRIBED") {
-          console.log("Terhubung ke Supabase Realtime channel gameflow-builds");
-        }
-      });
+      );
+
+    channel.subscribe((status, err) => {
+      if (status === "SUBSCRIBED") {
+        console.log("Terhubung ke Supabase Realtime channel gameflow-builds");
+        return;
+      }
+
+      if (status === "CHANNEL_ERROR") {
+        console.warn("Supabase realtime channel error:", err);
+      }
+
+      if (status === "TIMED_OUT") {
+        console.warn("Supabase realtime channel subscribe timed out.");
+      }
+    });
 
     return () => {
       supabase.removeChannel(channel);

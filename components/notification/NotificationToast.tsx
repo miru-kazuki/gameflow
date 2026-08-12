@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Bell, RefreshCw, X, Sparkles, CheckCircle2 } from "lucide-react";
+import { RefreshCw, X, Sparkles } from "lucide-react";
 import { useNotifications } from "./NotificationContext";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -56,10 +56,11 @@ export default function NotificationToast() {
           dismissToast();
         }, 1200);
       }
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
       addNotification({
         title: "❌ Sync Gagal",
-        message: err.message || "Gagal melakukan sync build.",
+        message: message || "Gagal melakukan sync build.",
         type: "info",
       });
       setSyncing(false);
